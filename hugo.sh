@@ -3,29 +3,29 @@
 (( EUID == 0 )) &&
   { echo >&2 "This script should not be run as root!"; exit 1; }
 
-hugo() {
+_hugo() {
   hugo=$( command -v hugo )
   echo "${hugo}"
 }
 
-year() {
+_year() {
   year=$( date -u '+%Y' )
   echo "${year}"
 }
 
-month() {
+_month() {
   month=$( date -u '+%m' )
   echo "${month}"
 }
 
-timestamp() {
+_timestamp() {
   timestamp=$( date -u '+%s%N' | cut -b1-13 )
   echo "${timestamp}"
 }
 
 run() {
   cache=$( pwd )
-  echo "$( hugo )" --minify --i18n-warnings --cacheDir "${cache}/cache"
+  echo "$( _hugo )" --minify --i18n-warnings --cacheDir "${cache}/cache"
 }
 
 server() {
@@ -37,7 +37,7 @@ watch() {
 }
 
 new_post() {
-  $( hugo ) new posts/"$( year )"/"$( month )"/"$( timestamp )"
+  $( _hugo ) new posts/"$( _year )"/"$( _month )"/"$( _timestamp )"
 }
 
 "$@"
