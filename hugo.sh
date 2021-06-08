@@ -1,10 +1,10 @@
 #!/usr/bin/bash
 
-(( ${EUID} == 0 )) &&
+(( EUID == 0 )) &&
   { echo >&2 "This script should not be run as root!"; exit 1; }
 
 hugo() {
-  hugo=$( which hugo )
+  hugo=$( command -v hugo )
   echo "${hugo}"
 }
 
