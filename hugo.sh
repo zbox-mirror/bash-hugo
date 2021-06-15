@@ -4,23 +4,19 @@
   { echo >&2 "This script should not be run as root!"; exit 1; }
 
 _hugo() {
-  hugo=$( command -v hugo )
-  echo "${hugo}"
+  command -v hugo
 }
 
 _year() {
-  year=$( date -u '+%Y' )
-  echo "${year}"
+  date -u '+%Y'
 }
 
 _month() {
-  month=$( date -u '+%m' )
-  echo "${month}"
+  date -u '+%m'
 }
 
 _timestamp() {
-  timestamp=$( date -u '+%s%N' | cut -b1-13 )
-  echo "${timestamp}"
+  date -u '+%s%N' | cut -b1-13
 }
 
 run() {
