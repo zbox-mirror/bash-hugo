@@ -20,7 +20,7 @@ _timestamp() {
 }
 
 run() {
-  cache=$( pwd )
+  cache="$( pwd )"
   echo "$( _hugo )" --minify --i18n-warnings --cacheDir "${cache}/cache"
 }
 
