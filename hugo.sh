@@ -33,7 +33,7 @@ watch() {
 }
 
 new_post() {
-  $( _hugo ) new posts/"$( _year )"/"$( _month )"/"$( _timestamp )"
+  $( _hugo ) new "posts/$( _year )/$( _month )/$( _timestamp )"
 }
 
 "$@"
