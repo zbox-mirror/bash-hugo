@@ -21,7 +21,7 @@ _timestamp() {
 
 run() {
   cache="$( pwd )"
-  echo "$( _hugo )" --minify --i18n-warnings --cacheDir "${cache}/cache"
+  echo "$( _hugo )" --i18n-warnings --cacheDir "${cache}/cache"
 }
 
 server() {
