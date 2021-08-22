@@ -32,8 +32,13 @@ watch() {
   $( run ) -w
 }
 
-new_post() {
-  $( _hugo ) new "posts/$( _year )/$( _month )/$( _timestamp )"
+new() {
+  entry_type="${1}"
+  if [[ ${entry_type} == "posts" ]]; then
+    $( _hugo ) new "${entry_type}/$( _year )/$( _month )/$( _timestamp )"
+  else
+    echo "No set entry type."
+  fi
 }
 
 "$@"
