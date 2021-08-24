@@ -34,10 +34,11 @@ watch() {
 
 new() {
   type="${1}"
+  path="${2}"
   if [[ ${type} == "posts" ]]; then
     $( _hugo ) new "${type}/$( _year )/$( _month )/$( _timestamp )"
   else
-    $( _hugo ) new "${type}/$( _timestamp )"
+    $( _hugo ) new "${type}/${path}/$( _timestamp )"
   fi
 }
 
