@@ -3,6 +3,10 @@
 (( EUID == 0 )) &&
   { echo >&2 "This script should not be run as root!"; exit 1; }
 
+_screen() {
+  command -v screen
+}
+
 _hugo() {
   command -v hugo
 }
@@ -21,7 +25,8 @@ _timestamp() {
 
 run() {
   cache="$( pwd )"
-  echo "$( _hugo )" --i18n-warnings --cacheDir "${cache}/cache"
+  screen="app.hugo"
+  echo "$( _screen )" -fn -dmS "${screen}" "$( _hugo )" --i18n-warnings --cacheDir "${cache}/cache"
 }
 
 server() {
