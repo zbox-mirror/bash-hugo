@@ -3,11 +3,11 @@
 (( EUID == 0 )) &&
   { echo >&2 "This script should not be run as root!"; exit 1; }
 
-_screen() {
+_cmd_screen() {
   command -v screen
 }
 
-_hugo() {
+_cmd_hugo() {
   command -v hugo
 }
 
@@ -23,27 +23,31 @@ _timestamp() {
   date -u '+%s%N' | cut -b1-13
 }
 
-run() {
+_hugo() {
   cache="$( pwd )"
   screen="app.hugo"
-  echo "$( _screen )" -fn -dmS "${screen}" "$( _hugo )" --i18n-warnings --cacheDir "${cache}/cache"
+  echo "$( _cmd_screen )" -fn -dmS "${screen}" "$( _cmd_hugo )" --i18n-warnings --cacheDir "${cache}/cache"
+}
+
+run() {
+  eval "$( _hugo )"
 }
 
 server() {
-  $( run ) server -D
+  eval "$( _hugo ) server -D"
 }
 
 watch() {
-  $( run ) -w
+  eval "$( _hugo ) -w"
 }
 
 new() {
   type="${1}"
   path="${2}"
   if [[ ${type} == "posts" ]]; then
-    $( _hugo ) new "${type}/$( _year )/$( _month )/$( _timestamp )"
+    $( _cmd_hugo ) new "${type}/$( _year )/$( _month )/$( _timestamp )"
   else
-    $( _hugo ) new "${type}/${path}/$( _timestamp )"
+    $( _cmd_hugo ) new "${type}/${path}/$( _timestamp )"
   fi
 }
 
