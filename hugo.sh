@@ -26,19 +26,25 @@ _timestamp() {
 _hugo() {
   cache="$( pwd )"
   screen="app.hugo"
-  echo "$( _cmd_screen )" -fn -dmS "${screen}" "$( _cmd_hugo )" --i18n-warnings --cacheDir "${cache}/cache"
+  background="${1}"
+
+  if [[ ${background} == "bg" ]]; then
+    echo "$( _cmd_screen )" -fn -dmS "${screen}" "$( _cmd_hugo )" --i18n-warnings --cacheDir "${cache}/cache"
+  else
+    echo "$( _cmd_hugo )" --i18n-warnings --cacheDir "${cache}/cache"
+  fi
 }
 
 run() {
-  eval "$( _hugo )"
+  eval "$( _hugo "$@" )"
 }
 
 server() {
-  eval "$( _hugo ) server -D"
+  eval "$( _hugo "$@" ) server -D"
 }
 
 watch() {
-  eval "$( _hugo ) -w"
+  eval "$( _hugo "$@" ) -w"
 }
 
 new() {
