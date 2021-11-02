@@ -25,14 +25,7 @@ _timestamp() {
 
 _hugo() {
   cache="$( pwd )"
-  screen="app.hugo"
-  background="${1}"
-
-  if [[ ${background} == "bg" ]]; then
-    echo "$( _cmd_screen )" -fn -dmS "${screen}" "$( _cmd_hugo )" --i18n-warnings --cacheDir "${cache}/cache"
-  else
-    echo "$( _cmd_hugo )" --i18n-warnings --cacheDir "${cache}/cache"
-  fi
+  echo "$( _cmd_hugo )" --i18n-warnings --cacheDir "${cache}/cache"
 }
 
 run() {
@@ -40,7 +33,23 @@ run() {
 }
 
 server() {
-  eval "$( _hugo "$@" ) server -D"
+  local OPTIND=1
+
+  while getopts "p:h" opt; do
+    case ${opt} in
+      p)
+        local port="${OPTARG}";
+        ;;
+      h|*)
+        echo "-p '1313'"
+        exit 2
+        ;;
+    esac
+  done
+
+  shift $(( OPTIND - 1 ))
+
+  eval "$( _hugo "$@" ) server -D -p ${port}"
 }
 
 watch() {
@@ -48,12 +57,26 @@ watch() {
 }
 
 new() {
-  type="${1}"
-  path="${2}"
+  local OPTIND=1
+
+  while getopts "t:h" opt; do
+    case ${opt} in
+      t)
+        local type="${OPTARG}";
+        ;;
+      h|*)
+        echo "-t ['posts' | '...']"
+        exit 2
+        ;;
+    esac
+  done
+
+  shift $(( OPTIND - 1 ))
+
   if [[ ${type} == "posts" ]]; then
     $( _cmd_hugo ) new "${type}/$( _year )/$( _month )/$( _timestamp )"
   else
-    $( _cmd_hugo ) new "${type}/${path}/$( _timestamp )"
+    $( _cmd_hugo ) new "${type}/$( _timestamp )"
   fi
 }
 
