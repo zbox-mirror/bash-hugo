@@ -25,8 +25,7 @@ _timestamp() {
 
 _hugo() {
   cache="$( pwd )"
-  # echo "$( _cmd_hugo )" --i18n-warnings --cacheDir "${cache}/cache"
-  echo "$( _cmd_hugo )" --i18n-warnings --ignoreCache
+  echo "$( _cmd_hugo )" --i18n-warnings --cacheDir "${cache}/cache" --gc
 }
 
 run() {
